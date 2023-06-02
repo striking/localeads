@@ -31,7 +31,7 @@ if config_env() == :prod do
   maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
   config :localeads, Localeads.Repo,
-    ssl: true,
+    # ssl: true,
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
     socket_options: maybe_ipv6
@@ -103,13 +103,13 @@ if config_env() == :prod do
   #
       config :localeads, Localeads.Mailer,
         adapter: Swoosh.Adapters.Sendgrid,
-        api_key: System.get_env("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"),
+        api_key: System.get_env("SENDGRID_API_KEY"),
         domain: System.get_env("localeads.com.au")
   #
   # For this example you need include a HTTP client required by Swoosh API client.
   # Swoosh supports Hackney and Finch out of the box:
   #
-  #     config :swoosh, :api_client, Swoosh.ApiClient.Hackney
+      config :swoosh, :api_client, Swoosh.ApiClient.Hackney
   #
   # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
 end
