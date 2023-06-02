@@ -1,0 +1,390 @@
+defmodule LocaleadsWeb.PostersLive do
+  use LocaleadsWeb, :live_view
+    
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, form_data: %{})}
+  end
+
+  def handle_event("contact-form-submit", params, socket) do
+
+    Localeads.Emails.ContactFormEmail.new_lead(params) |> Localeads.Mailer.deliver()
+
+    {:noreply, socket
+			|> put_flash(:info, "Thanks, we'll be in touch soon.")}
+
+  end
+
+	def render(assigns) do
+		~H"""
+		
+<div phx-target="live-view" class="bg-gray-900">
+  <main>
+    <!-- Hero section -->
+    <div class="relative isolate overflow-hidden">
+      <svg class="absolute inset-0 -z-10 h-full w-full stroke-white/10 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]" aria-hidden="true">
+        <defs>
+          <pattern id="983e3e4c-de6d-4c3f-8d64-b9761d1534cc" width="200" height="200" x="50%" y="-1" patternUnits="userSpaceOnUse">
+            <path d="M.5 200V.5H200" fill="none" />
+          </pattern>
+        </defs>
+        <svg x="50%" y="-1" class="overflow-visible fill-gray-800/20">
+          <path d="M-200 0h201v201h-201Z M600 0h201v201h-201Z M-400 600h201v201h-201Z M200 800h201v201h-201Z" stroke-width="0" />
+        </svg>
+        <rect width="100%" height="100%" stroke-width="0" fill="url(#983e3e4c-de6d-4c3f-8d64-b9761d1534cc)" />
+      </svg>
+      <div class="absolute left-[calc(50%-4rem)] top-10 -z-10 transform-gpu blur-3xl sm:left-[calc(50%-18rem)] lg:left-48 lg:top-[calc(50%-30rem)] xl:left-[calc(50%-24rem)]" aria-hidden="true">
+        <div class="aspect-[1108/632] w-[69.25rem] bg-gradient-to-r from-[#80caff] to-[#4f46e5] opacity-20" style="clip-path: polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)"></div>
+      </div>
+      <div class="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-40 lg:flex lg:px-8 lg:pt-40">
+        <div class="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
+          <img class="h-11" src={~p"/images/base_icon_transparent_background.png"} alt="Localeads">
+          <h1 class="mt-10 text-4xl font-bold tracking-tight text-white sm:text-6xl">Transform Walls into Revenue: Professionally Managed Advertising Campaigns</h1>
+          <p class="mt-6 text-lg leading-8 text-gray-300">We're expanding our reach in Brisbane and Gold Coast and looking for building walls to lease. If you own a building and would like to increase revenue, we'd love to hear from you!</p>
+          <div class="mt-10 flex items-center gap-x-6">
+            <a href="#contact-form" class="rounded-md bg-ll-orange px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-ll-orange-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400">Lease My Wall</a>
+            <a href="#" class="text-sm font-semibold leading-6 text-white">Speak to a Human<span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
+          <div class="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
+            <img src={~p"/images/wall-art.jpg"} alt="App screenshot" width="607" height="360" class="w-[40rem] rounded-md bg-white/5 shadow-2xl ring-1 ring-white/10">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logo cloud -->
+    <div class="mx-auto mt-8 max-w-7xl px-6 sm:mt-16 lg:px-8">
+      <h2 class="text-center text-lg font-semibold leading-8 text-white">The world’s most iconic brands advertise with us</h2>
+      <div class="mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5">
+        <img class="col-span-2 max-h-24 w-full object-contain lg:col-span-1 text-white fill-current" src={~p"/images/redbull.svg"} alt="Red Bull" width="316" height="96">
+        <img class="col-span-2 max-h-24 w-full object-contain lg:col-span-1" src={~p"/images/salesforce.svg"} alt="Salesforce" width="316" height="96">
+        <img class="col-span-2 max-h-24 w-full object-contain lg:col-span-1" src={~p"/images/afterpay_white.svg"} alt="Afterpay" width="316" height="96">
+        <img class="col-span-2 max-h-48 w-full object-contain sm:col-start-2 lg:col-span-1" src={~p"/images/dior_white.svg"} alt="Dior" width="316" height="196">
+        <img class="col-span-2 col-start-2 max-h-48 w-full object-contain sm:col-start-auto lg:col-span-1" src={~p"/images/ck_white.svg"} alt="Calvin Klein"  height="196">
+      </div>
+    </div>
+
+    <!-- Feature section -->
+    <div class="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-base font-semibold leading-7 text-indigo-400">Hassle free</h2>
+        <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">We Partner with you for the life of the lease</p>
+        <p class="mt-6 text-lg leading-8 text-gray-300">We know there is a lot of illegal postings and shady campaigns, that's not out jam. We advertise for reputable brands and professionally manage the campaigns in partnership with you.</p>
+      </div>
+      <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+        <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+          <div class="flex flex-col">
+            <dt class="text-base font-semibold leading-7 text-white">
+              <div class="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </div>
+              Maintenance
+            </dt>
+            <dd class="mt-1 flex flex-auto flex-col text-base leading-7 text-gray-300">
+              <p class="flex-auto">We inspect your site regularly, removing rubbish to ensure the area stays in top shape.</p>
+              <p class="mt-6">
+                <a href="#contact-form" class="text-sm font-semibold leading-6 text-indigo-400">Learn more <span aria-hidden="true">→</span></a>
+              </p>
+            </dd>
+          </div>
+          <div class="flex flex-col">
+            <dt class="text-base font-semibold leading-7 text-white">
+              <div class="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
+                </svg>
+              </div>
+              Graffitti Management
+            </dt>
+            <dd class="mt-1 flex flex-auto flex-col text-base leading-7 text-gray-300">
+              <p class="flex-auto">Regular mainteancna ensure graffitti is clean up, keeping you wall looking shmick!</p>
+              <p class="mt-6">
+                <a href="#contact-form" class="text-sm font-semibold leading-6 text-indigo-400">Learn more <span aria-hidden="true">→</span></a>
+              </p>
+            </dd>
+          </div>
+          <div class="flex flex-col">
+            <dt class="text-base font-semibold leading-7 text-white">
+              <div class="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+</svg>
+
+              </div>
+              Stop Illiegal Postings
+            </dt>
+            <dd class="mt-1 flex flex-auto flex-col text-base leading-7 text-gray-300">
+              <p class="flex-auto">We put an end to illegal postings of street posters and other advertising assets you did not approve.</p>
+              <p class="mt-6">
+                <a href="#contact-form" class="text-sm font-semibold leading-6 text-indigo-400">Learn more <span aria-hidden="true">→</span></a>
+              </p>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <!-- Posters section -->
+    <div class="mt-32 sm:mt-56">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl sm:text-center">
+          <h2 class="text-base font-semibold leading-7 text-indigo-400">Small walls</h2>
+          <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Street Posters.</p>
+          <p class="mt-6 text-lg leading-8 text-gray-300">Work great for small format street poster campaigns. <br /> Street Poster campaings are changed weekly and are usually focussed on the latest trend of local events.</p>
+        </div>
+      </div>
+      <div class="relative overflow-hidden pt-16">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+          <img src={~p"/images/nice_posters.jpg"} alt="Styled street poster campaign" class="mb-[-12%] rounded-xl shadow-2xl ring-1 ring-white/10" width="2432" height="1442">
+          <div class="relative" aria-hidden="true">
+            <div class="absolute -inset-x-20 bottom-0 bg-gradient-to-t from-gray-900 pt-[7%]"></div>
+          </div>
+        </div>
+      </div>
+      <div class="mx-auto mt-16 max-w-7xl px-6 sm:mt-20 md:mt-24 lg:px-8">
+        <dl class="mx-auto grid max-w-2xl grid-cols-1 gap-x-6 gap-y-10 text-base leading-7 text-gray-300 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
+          <div class="relative pl-9">
+            <dt class="inline font-semibold text-white">
+              <div class="absolute left-1 top-1 h-5 w-5">
+              <img src={~p"/images/base_icon_transparent_background.png"} width="30" />
+              </div>
+              Stop illegal postings.
+            </dt>
+            <dd class="inline">Partnering with us, ensures you earn income for every posting. Our team monitors and removed illegal postings on your assets.</dd>
+          </div>
+          <div class="relative pl-9">
+            <dt class="inline font-semibold text-white">
+              <div class="absolute left-1 top-1 h-5 w-5">
+              <img src={~p"/images/base_icon_transparent_background.png"} width="30" />
+              </div>
+              Professional installation.
+            </dt>
+            <dd class="inline">Our team of professional poster installers ensure a neat and tidy install in a designated framed location.</dd>
+          </div>
+          <div class="relative pl-9">
+            <dt class="inline font-semibold text-white">
+              <div class="absolute left-1 top-1 h-5 w-5">
+              <img src={~p"/images/base_icon_transparent_background.png"} width="30" />
+              </div>
+              Graffitti management.
+            </dt>
+            <dd class="inline">Our team inspects your posters each week and cleans any graffitti around the posters.</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <!-- Murals section -->
+    <div class="mt-32 sm:mt-56">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl sm:text-center">
+          <h2 class="text-base font-semibold leading-7 text-indigo-400">Large walls</h2>
+          <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Bespoke Murals.</p>
+          <p class="mt-6 text-lg leading-8 text-gray-300">Work great for large high impact walls, and look great. <br/> Murals are usually longer running campaigns of several months.</p>
+        </div>
+      </div>
+      <div class="relative overflow-hidden pt-16">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+          <img src={~p"/images/old-coke.jpg"} alt="Styled street poster campaign" class="mb-[-12%] rounded-xl shadow-2xl ring-1 ring-white/10" width="2432" height="1442">
+          <div class="relative" aria-hidden="true">
+            <div class="absolute -inset-x-20 bottom-0 bg-gradient-to-t from-gray-900 pt-[7%]"></div>
+          </div>
+        </div>
+      </div>
+      <div class="mx-auto mt-16 max-w-7xl px-6 sm:mt-20 md:mt-24 lg:px-8">
+        <dl class="mx-auto grid max-w-2xl grid-cols-1 gap-x-6 gap-y-10 text-base leading-7 text-gray-300 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
+          <div class="relative pl-9">
+            <dt class="inline font-semibold text-white">
+              <div class="absolute left-1 top-1 h-5 w-5">
+              <img src={~p"/images/base_icon_transparent_background.png"} width="30" />
+              </div>
+              Stop illegal postings.
+            </dt>
+            <dd class="inline">Partnering with us, ensures you earn income for every posting. Our team monitors and removed illegal postings on your assets.</dd>
+          </div>
+          <div class="relative pl-9">
+            <dt class="inline font-semibold text-white">
+              <div class="absolute left-1 top-1 h-5 w-5">
+              <img src={~p"/images/base_icon_transparent_background.png"} width="30" />
+              </div>
+              Local artists.
+            </dt>
+            <dd class="inline">We work with talented local artists to custom paint murals for leading brands.</dd>
+          </div>
+          <div class="relative pl-9">
+            <dt class="inline font-semibold text-white">
+              <div class="absolute left-1 top-1 h-5 w-5">
+              <img src={~p"/images/base_icon_transparent_background.png"} width="30" />
+              </div>
+              Graffitti management.
+            </dt>
+            <dd class="inline">Our team inspects your posters each week and cleans any graffitti around the posters.</dd>
+          </div>
+
+        </dl>
+      </div>
+    </div>
+
+    <!-- CTA section -->
+    <div class="relative isolate mt-32 px-6 py-32 sm:mt-56 sm:py-40 lg:px-8">
+      <svg class="absolute inset-0 -z-10 h-full w-full stroke-white/10 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]" aria-hidden="true">
+        <defs>
+          <pattern id="1d4240dd-898f-445f-932d-e2872fd12de3" width="200" height="200" x="50%" y="0" patternUnits="userSpaceOnUse">
+            <path d="M.5 200V.5H200" fill="none" />
+          </pattern>
+        </defs>
+        <svg x="50%" y="0" class="overflow-visible fill-gray-800/20">
+          <path d="M-200 0h201v201h-201Z M600 0h201v201h-201Z M-400 600h201v201h-201Z M200 800h201v201h-201Z" stroke-width="0" />
+        </svg>
+        <rect width="100%" height="100%" stroke-width="0" fill="url(#1d4240dd-898f-445f-932d-e2872fd12de3)" />
+      </svg>
+      <div class="absolute inset-x-0 top-10 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl" aria-hidden="true">
+        <div class="aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r from-[#80caff] to-[#4f46e5] opacity-20" style="clip-path: polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)"></div>
+      </div>
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Boost your revenue.<br>Partner with Localeads today.</h2>
+        <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-300">We welcome any enquiries or questions. Even if you're not sure your wall space is suitable, reach out and lets find out.</p>
+        <div class="mt-10 flex items-center justify-center gap-x-6">
+          <a href="#contact-form" class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Get started</a>
+          <%!-- <a href="#" class="text-sm font-semibold leading-6 text-white">Learn more <span aria-hidden="true">→</span></a> --%>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!--
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+
+<form phx-submit="contact-form-submit" class="mx-auto max-w-2xl">
+  <div class="space-y-12 sm:mt-56 lg:px-8 px-6">
+
+    <div class="border-b border-white/10 pb-12">
+      <h2 class="text-base font-semibold leading-7 text-white">Get In Touch</h2>
+      <p class="mt-1 text-sm leading-6 text-gray-400">Leave some basinc information of your site and one of our team will be in touch.</p>
+
+      <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+        <div class="sm:col-span-3">
+          <label for="first_name" class="block text-sm font-medium leading-6 text-white">First name</label>
+          <div class="mt-2">
+            <input type="text" name="first_name" id="first_name" autocomplete="given-name" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6">
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+          <label for="last_name" class="block text-sm font-medium leading-6 text-white">Last name</label>
+          <div class="mt-2">
+            <input type="text" name="last_name" id="last_name" autocomplete="family-name" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6">
+          </div>
+        </div>
+
+        <div class="sm:col-span-4">
+          <label for="phone" class="block text-sm font-medium leading-6 text-white">Phone number</label>
+          <div class="mt-2">
+            <input id="phone" name="phone" type="text" autocomplete="phone" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6">
+          </div>
+        </div>
+
+        <div class="sm:col-span-4">
+          <label for="email" class="block text-sm font-medium leading-6 text-white">Email address</label>
+          <div class="mt-2">
+            <input id="email" name="email" type="email" autocomplete="email" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6">
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+          <label for="enquiry_type" class="block text-sm font-medium leading-6 text-white">Inquiry Type</label>
+          <div class="mt-2">
+            <select id="enquiry_type" name="enquiry_type" autocomplete="inquiry-type" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 [&_*]:text-black">
+              <option>Street Posters</option>
+              <option>Murals</option>
+              <option>Queensland Rail Platform</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-span-full">
+          <label for="address" class="block text-sm font-medium leading-6 text-white">Street address</label>
+          <div class="mt-2">
+            <input type="text" name="address" id="address" autocomplete="street-address" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6">
+          </div>
+        </div>
+
+        <div class="sm:col-span-2 sm:col-start-1">
+          <label for="suburb" class="block text-sm font-medium leading-6 text-white">Suburb</label>
+          <div class="mt-2">
+            <input type="text" name="suburb" id="suburb" autocomplete="address-level2" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6">
+          </div>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="state" class="block text-sm font-medium leading-6 text-white">State</label>
+          <div class="mt-2">
+            <input type="text" name="state" id="state" autocomplete="address-level1" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6">
+          </div>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="post_code" class="block text-sm font-medium leading-6 text-white">Post code</label>
+          <div class="mt-2">
+            <input type="text" name="post_code" id="post_code" autocomplete="postal-code" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-6 flex items-center justify-end gap-x-6">
+    <button type="submit" class="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Send</button>
+  </div>
+</form>
+
+
+  <!-- Footer -->
+  <footer aria-labelledby="footer-heading" class="relative">
+    <h2 id="footer-heading" class="sr-only">Footer</h2>
+    <div class="mx-auto max-w-7xl px-6 pb-8 pt-4 lg:px-8">
+      <div class="border-t border-white/10 pt-8 md:flex md:items-center md:justify-between">
+        <div class="flex space-x-6 md:order-2">
+          <a href="#" class="text-gray-500 hover:text-gray-400">
+            <span class="sr-only">Facebook</span>
+            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+            </svg>
+          </a>
+          <a href="#" class="text-gray-500 hover:text-gray-400">
+            <span class="sr-only">Instagram</span>
+            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+            </svg>
+          </a>
+          <a href="#" class="text-gray-500 hover:text-gray-400">
+            <span class="sr-only">YouTube</span>
+            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z" clip-rule="evenodd" />
+            </svg>
+          </a>
+        </div>
+        <p class="mt-8 text-xs leading-5 text-gray-400 md:order-1 md:mt-0">&copy; 2023 Striking Group Pty Ltd T/A Localeads. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+
+		"""
+	end
+end
